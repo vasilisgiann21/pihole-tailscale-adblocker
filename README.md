@@ -1,5 +1,5 @@
 # Persistent Global Ad-Blocking: Pi-hole & Tailscale Integration
-
+![Pi-hole Dashboard](Screenshot_20260211_050321.png)
 ## Project Overview
 This project implements a network-wide ad-blocking solution using a **Raspberry Pi Zero 2 W**. By integrating **Pi-hole** with **Tailscale**, I created a split-tunnel VPN mesh network that allows my mobile devices to utilize the Pi-hole's DNS filtering even when I am outside my home network (e.g., on 4G/5G or public Wi-Fi).
 
@@ -26,13 +26,15 @@ To extend protection outside the LAN:
 * **Pi-hole Settings:** Enabled *"Permit all origins"* in Interface Settings.
     * *Why:* Tailscale traffic arrives via the `tailscale0` interface, not `eth0`. Pi-hole defaults to local traffic only, so this change was required to accept VPN DNS queries.
 * **Tailscale Admin Console:** Enabled "Override Local DNS" and set the Nameserver to the Pi’s Tailscale IP address.
-
+![Network Interface showing Tailscale0](Screenshot_20260211_050354.png)
+*Above: Network interface analysis confirming active traffic on the `tailscale0` VPN interface alongside the physical `eth0` connection.*
 ## Troubleshooting & Optimization
 
 During the deployment, I encountered and solved three major specific issues:
 
 ### Issue 1: YouTube Thumbnails Blocked
 **The Problem:** After adding aggressive blocklists, YouTube video thumbnails stopped loading, appearing as gray boxes.
+![Query Log showing blocked domains](Screenshot_20260211_050419.png)
 **The Solution:**
 1. Analyzed the Pi-hole `Query Log` during a refresh attempt.
 2. Identified that the blocklists were falsely flagging YouTube CDN domains (e.g., `i.ytimg.com`).
